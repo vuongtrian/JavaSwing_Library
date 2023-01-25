@@ -1,0 +1,14 @@
+
+G
+java:S2387","menuBar" is the name of a field in "Frame".(Ï»”úÿÿÿÿ
+\
+java:S1659"GDeclare "allBookIds" and all following declarations on a separate line.(ø”æ/
+9
+java:S1948"$Make "ci" transient or serializable.(Û³šM
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(½Ä¹úÿÿÿÿ
+Q	java:S1255"<This block of commented-out lines of code should be removed.(®êéæ
+S	java:S106w"9Replace this use of System.out or System.err by a logger.(åö¡½úÿÿÿÿ
+V	java:S125z"<This block of commented-out lines of code should be removed.(äÀ‡Œúÿÿÿÿ
+T	java:S106•"9Replace this use of System.out or System.err by a logger.(åö¡½úÿÿÿÿ
+R	java:S125˜"<This block of commented-out lines of code should be removed.(Ã€şô

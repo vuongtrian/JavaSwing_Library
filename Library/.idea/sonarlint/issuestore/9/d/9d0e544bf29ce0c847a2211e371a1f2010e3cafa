@@ -1,0 +1,21 @@
+
+u
+java:S1450,"ZRemove the "loginButton" field and declare it as a local variable in the relevant methods.(¢ÏÃöıÿÿÿÿ
+m
+java:S1450"XRemove the "mainPanel" field and declare it as a local variable in the relevant methods.(šÈŞ}
+r
+java:S1450*"WRemove the "password" field and declare it as a local variable in the relevant methods.(æ©Âÿÿÿÿÿ
+r
+java:S1450)"WRemove the "username" field and declare it as a local variable in the relevant methods.(ƒİÔØøÿÿÿÿ
+Q	java:S125O"<This block of commented-out lines of code should be removed.(é‘»³
+Q	java:S125d"<This block of commented-out lines of code should be removed.(éŞ×•
+H
+java:S1602¼",Remove useless curly braces around statement(ö€Ã’ûÿÿÿÿ
+O
+java:S1128"9Remove this unused import 'business.ControllerInterface'.(Øˆ­³
+L
+java:S1128"6Remove this unused import 'business.SystemController'.(‹í‘¹
+H
+java:S1068!"-Remove this unused "container" private field.(–¦ïşÿÿÿÿ
+F
+java:S1068-"0Remove this unused "logoutButton" private field.(Û¾§Û

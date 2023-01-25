@@ -1,0 +1,21 @@
+
+t
+java:S2293B"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÆîĞæûÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(Ùàëˆùÿÿÿÿ
+S	java:S106 "9Replace this use of System.out or System.err by a logger.(† £şÿÿÿÿ
+G
+java:S3599E",Use another way to initialize this instance.(²²ØÂÿÿÿÿÿ
+t
+java:S1171F"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+B
+java:S3599R",Use another way to initialize this instance.(§¾ùØ
+t
+java:S1171S"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+B
+java:S3599]",Use another way to initialize this instance.(ßŒÑè
+t
+java:S1171^"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
+G
+java:S3599g",Use another way to initialize this instance.(¨ãĞòûÿÿÿÿ
+t
+java:S1171h"YMove the contents of this initializer to a standard constructor or to field initializers.(ÒÌâ–øÿÿÿÿ
