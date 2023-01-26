@@ -20,6 +20,7 @@ import business.ControllerInterface;
 import business.LoginException;
 import business.SystemController;
 import dataaccess.Auth;
+import librarysystem.adminpanel.AddBookCopy;
 
 
 public class LoginWindow extends JFrame implements LibWindow {
@@ -190,8 +191,10 @@ public class LoginWindow extends JFrame implements LibWindow {
 				SystemController cs = new SystemController();
 				try {
 					cs.login(username.getText(), password.getText());
-					if (cs.currentAuth == Auth.LIBRARIAN)
+					if (cs.currentAuth == Auth.LIBRARIAN) {
 						JOptionPane.showMessageDialog(this,"Welcome Librarian");
+
+					}
 					else if (cs.currentAuth == Auth.ADMIN)
 						JOptionPane.showMessageDialog(this,"Welcome Admin");
 					else 
