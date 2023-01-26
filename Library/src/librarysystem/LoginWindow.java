@@ -17,8 +17,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JOptionPane;
 
 import business.ControllerInterface;
-
+import business.LoginException;
 import business.SystemController;
+import dataaccess.Auth;
 
 
 public class LoginWindow extends JFrame implements LibWindow {
@@ -186,8 +187,19 @@ public class LoginWindow extends JFrame implements LibWindow {
     	
     	private void addLoginButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
-    			JOptionPane.showMessageDialog(this,"Successful Login");
-    				
+				SystemController cs = new SystemController();
+				try {
+					cs.login(username.getText(), password.getText());
+					if (cs.currentAuth == Auth.LIBRARIAN)
+						JOptionPane.showMessageDialog(this,"Welcome Librarian");
+					else if (cs.currentAuth == Auth.ADMIN)
+						JOptionPane.showMessageDialog(this,"Welcome Admin");
+					else 
+						JOptionPane.showMessageDialog(this,"Welcome Super User");
+				} catch (LoginException e) {
+					if (SystemController.currentAuth == null)
+    					JOptionPane.showMessageDialog(this, e.getMessage());
+				}
     		});
     	}
 	
