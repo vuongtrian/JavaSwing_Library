@@ -190,8 +190,12 @@ public class LoginWindow extends JFrame implements LibWindow {
 				SystemController cs = new SystemController();
 				try {
 					cs.login(username.getText(), password.getText());
-					if (cs.currentAuth == Auth.LIBRARIAN)
-						JOptionPane.showMessageDialog(this,"Welcome Librarian");
+					if (cs.currentAuth == Auth.LIBRARIAN) {
+//						JOptionPane.showMessageDialog(this,"Welcome Librarian");
+//						MainWindow.INSTANCE.disableTab(Auth.LIBRARIAN);
+						MainWindow.INSTANCE.init(Auth.LIBRARIAN);
+						LoginWindow.INSTANCE.setVisible(false);
+						}
 					else if (cs.currentAuth == Auth.ADMIN)
 						JOptionPane.showMessageDialog(this,"Welcome Admin");
 					else 

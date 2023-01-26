@@ -1,0 +1,24 @@
+
+t
+java:S2293D"YReplace the type specification in this constructor call with the diamond operator ("<>").(•¤Ê÷ÿÿÿÿÿ
+o
+java:S2293I"YReplace the type specification in this constructor call with the diamond operator ("<>").(®ÿîš
+o
+java:S2293O"YReplace the type specification in this constructor call with the diamond operator ("<>").(€õŸ¿
+]	java:S125"<This block of commented-out lines of code should be removed.(Ò‰¦¥ýÿÿÿÿ8ãù‰€ß0
+C	java:S108`")Either remove or fill this block of code.(¬Àáªøÿÿÿÿ
+E
+java:S2093V"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+C	java:S108r")Either remove or fill this block of code.(¬Àáªøÿÿÿÿ
+E
+java:S2093h"*Change this "try" to a try-with-resources.(¡»¢üùÿÿÿÿ
+B
+java:S1948|"'Make "first" transient or serializable.(é¿«Ðøÿÿÿÿ
+C
+java:S1948}"(Make "second" transient or serializable.(õœéÃøÿÿÿÿ
+Z
+java:S1124z"EReorder the modifiers to comply with the Java Language Specification.(à•¦
+K
+java:S1128".Remove this unused import 'business.BookCopy'.(¹ðÍƒ8ûù‰€ß0
+a
+java:S1128"DRemove this unused import 'dataaccess.DataAccessFacade.StorageType'.(›ÕÑ½8ûù‰€ß0

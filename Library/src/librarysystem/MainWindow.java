@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import dataaccess.Auth;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JMenuBar;
@@ -14,63 +17,82 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame {
+	
+	public static final MainWindow INSTANCE = new MainWindow();
+	
 
 	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow frame = new MainWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					MainWindow frame = new MainWindow();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
 	 */
+	
+	private JMenuBar menuBar;
+	private JMenu libMenu;
+	private JMenuItem checkoutBookItem;
+	private JMenuItem checkoutRecordItem;
+	JMenuItem overdueItem;
+	JMenuItem alBookItem;
+	JMenu adminMenu;
+	JMenuItem addMemberItem;
+	JMenuItem editMemberItem;
+	JMenuItem addBookItem;
+	JMenuItem addCopyItem;
+	JPanel pContent;
+	JButton btnLogout;
+	JButton btnNewButton;
+	
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 577, 428);
 		
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu libMenu = new JMenu("Librarian");
+		libMenu = new JMenu("Librarian");
 		menuBar.add(libMenu);
 		
-		JMenuItem checkoutBookItem = new JMenuItem("Checkout Book");
+		checkoutBookItem = new JMenuItem("Checkout Book");
 		libMenu.add(checkoutBookItem);
 		
-		JMenuItem checkoutRecordItem = new JMenuItem("Checkout Record");
+		checkoutRecordItem = new JMenuItem("Checkout Record");
 		libMenu.add(checkoutRecordItem);
 		
-		JMenuItem overdueItem = new JMenuItem("Overdue Checkout");
+		overdueItem = new JMenuItem("Overdue Checkout");
 		libMenu.add(overdueItem);
 		
-		JMenuItem alBookItem = new JMenuItem("All Book");
+		alBookItem = new JMenuItem("All Book");
 		libMenu.add(alBookItem);
 		
-		JMenu adminMenu = new JMenu("Admin");
+		adminMenu = new JMenu("Admin");
 		menuBar.add(adminMenu);
 		
-		JMenuItem addMemberItem = new JMenuItem("Add Member");
+		addMemberItem = new JMenuItem("Add Member");
 		adminMenu.add(addMemberItem);
 		
-		JMenuItem editMemberItem = new JMenuItem("Edit Member");
+		editMemberItem = new JMenuItem("Edit Member");
 		adminMenu.add(editMemberItem);
 		
-		JMenuItem addBookItem = new JMenuItem("Add Book");
+		addBookItem = new JMenuItem("Add Book");
 		adminMenu.add(addBookItem);
 		
-		JMenuItem addCopyItem = new JMenuItem("Add Copy Book");
+		addCopyItem = new JMenuItem("Add Copy Book");
 		adminMenu.add(addCopyItem);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -78,20 +100,41 @@ public class MainWindow extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel pContent = new JPanel();
+		pContent = new JPanel();
 		pContent.setBounds(10, 10, 543, 318);
 		contentPane.add(pContent);
 		
-		JButton btnLogout = new JButton("Logout");
+		btnLogout = new JButton("Logout");
 		btnLogout.setBounds(468, 338, 85, 21);
 		contentPane.add(btnLogout);
 		
-		JButton btnNewButton = new JButton("All Members");
+		btnNewButton = new JButton("All Members");
 		btnNewButton.setBounds(10, 338, 89, 21);
 		contentPane.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
+	}
+	
+//	public void disableTab (Auth auth) {
+//		if(auth == Auth.LIBRARIAN) {
+//			adminMenu.setVisible(false);
+//			System.out.println("WORKING  ");
+//		}
+//	}
+
+	
+	public void init(Auth auth) {
+		try {
+			MainWindow frame = new MainWindow();
+			if(auth == Auth.LIBRARIAN) {
+				adminMenu.setVisible(false);
+				System.out.println("WORKING  ");
+			}
+			frame.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
