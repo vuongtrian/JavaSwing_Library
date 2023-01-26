@@ -47,18 +47,18 @@ public class MainWindow extends JFrame {
 	private JMenu libMenu;
 	private JMenuItem checkoutBookItem;
 	private JMenuItem checkoutRecordItem;
-	JMenuItem overdueItem;
-	JMenuItem alBookItem;
-	JMenu adminMenu;
-	JMenuItem addMemberItem;
-	JMenuItem editMemberItem;
-	JMenuItem addBookItem;
-	JMenuItem addCopyItem;
-	JPanel pContent;
-	JButton btnLogout;
-	JButton btnNewButton;
+	private JMenuItem overdueItem;
+	private JMenuItem alBookItem;
+	private JMenu adminMenu;
+	private JMenuItem addMemberItem;
+	private JMenuItem editMemberItem;
+	private JMenuItem addBookItem;
+	private JMenuItem addCopyItem;
+	private JPanel pContent;
+	private JButton btnLogout;
+	private JButton btnNewButton;
 	
-	public MainWindow() {
+	private MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 577, 428);
 		
@@ -116,21 +116,14 @@ public class MainWindow extends JFrame {
 			}
 		});
 	}
-	
-//	public void disableTab (Auth auth) {
-//		if(auth == Auth.LIBRARIAN) {
-//			adminMenu.setVisible(false);
-//			System.out.println("WORKING  ");
-//		}
-//	}
 
-	
 	public void init(Auth auth) {
 		try {
 			MainWindow frame = new MainWindow();
-			if(auth == Auth.LIBRARIAN) {
-				adminMenu.setVisible(false);
-				System.out.println("WORKING  ");
+			if(auth.equals(Auth.LIBRARIAN)) {
+				frame.adminMenu.setVisible(false);
+			} else if(auth.equals(Auth.ADMIN)) {
+				frame.libMenu.setVisible(false);
 			}
 			frame.setVisible(true);
 		} catch (Exception e) {

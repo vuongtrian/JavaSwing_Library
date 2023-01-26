@@ -1,17 +1,0 @@
-
-u
-java:S1450-"ZRemove the "loginButton" field and declare it as a local variable in the relevant methods.(¢ÏÃöýÿÿÿÿ
-m
-java:S1450"XRemove the "mainPanel" field and declare it as a local variable in the relevant methods.(šÈÞ}
-Q	java:S125P"<This block of commented-out lines of code should be removed.(é‘»³
-Q	java:S125e"<This block of commented-out lines of code should be removed.(éÞ×•
-X
-java:S2209Á"5Change this instance-reference to a static reference.(àåˆÒúÿÿÿÿ8îÇÿÿÞ0
-S
-java:S2209Ã"5Change this instance-reference to a static reference.(¦ÍŽº8ðÇÿÿÞ0
-O
-java:S1128"9Remove this unused import 'business.ControllerInterface'.(Øˆ­³
-H
-java:S1068""-Remove this unused "container" private field.(–¦žïþÿÿÿÿ
-F
-java:S1068."0Remove this unused "logoutButton" private field.(Û¾§Û
