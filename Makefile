@@ -21,4 +21,5 @@ runv:
 	$(JAVA) $(JAVA_FLAGS) $(MAIN_VIEW_CLASS)
 
 clean:
-	rm -rf bin/*
+	rm -rf Library/bin/*
+	rm -rf Library/bin

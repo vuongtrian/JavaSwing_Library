@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class DataAccessFacade implements DataAccess {
 //			+ "/Library/src/dataaccess/storage";
 
 	public static final String OUTPUT_DIR = System.getProperty("user.dir")
-			+ "/src/dataaccess/storage";
+			+ "/Library/src/dataaccess/storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -147,5 +148,59 @@ public class DataAccessFacade implements DataAccess {
 		}
 		private static final long serialVersionUID = 5399827794066637059L;
 	}
+
+
+	@Override
+	public LibraryMember getLibraryMemberById(String id) {
+		HashMap<String, LibraryMember> members = readMemberMap();
+		try {
+			if (members.get(id) != null)
+				return members.get(id);
+			else
+				throw new Exception("User doesn't exist");
+		} catch (Exception e) {
+			System.out.println("User doesn't exist");
+		}
+		return null;
+	}
+
+	@Override
+	public boolean updateMember(LibraryMember member) {
+		HashMap<String, LibraryMember> members = new HashMap<>();
+		LibraryMember oldMember = members.get(member.getMemberId());
+		if (oldMember != null) {
+			members.replace(member.getMemberId(), oldMember, member);
+			saveToStorage(StorageType.MEMBERS, members);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void addBook(Book newBook) {
+		HashMap<String, Book> books = new HashMap<String, Book>();
+		books.put(newBook.getIsbn(), newBook);
+		saveToStorage(StorageType.BOOKS, books);
+	}
+
 	
+	@Override
+	public Book getBookByIsbn(String isbn) {
+		HashMap<String, Book> books = readBooksMap();
+		if (books.get(isbn) != null)
+		return books.get(isbn);
+		return null;
+	}
+	
+	@Override
+	public void addBookCopy(BookCopy bookCopy) {
+		HashMap<String, Book> books = readBooksMap();
+		Book book = bookCopy.getBook();
+		try {
+			books.get(book.getIsbn()).addCopy();
+			saveToStorage(StorageType.BOOKS, books);
+		} catch (Exception e) {
+			System.out.println("something wrong with addBookCopy!");
+		}
+	}
 }
