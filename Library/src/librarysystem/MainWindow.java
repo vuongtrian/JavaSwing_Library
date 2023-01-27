@@ -78,18 +78,18 @@ public class MainWindow extends JFrame{
 		menuBar.add(libMenu);
 		
 		checkoutBookItem = new JMenuItem("Checkout Book");
-//		checkoutRecordItem.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				pContent.getComponent(0).setVisible(true);
-//				pContent.getComponent(1).setVisible(false);
-//				pContent.getComponent(2).setVisible(false);
-//				pContent.getComponent(3).setVisible(false);
-//				pContent.getComponent(4).setVisible(false);
-//				pContent.getComponent(5).setVisible(false);
-//				pContent.getComponent(6).setVisible(false);
-//			}
-//		});
+		checkoutBookItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pContent.getComponent(0).setVisible(true);
+				pContent.getComponent(1).setVisible(false);
+				pContent.getComponent(2).setVisible(false);
+				pContent.getComponent(3).setVisible(false);
+				pContent.getComponent(4).setVisible(false);
+				pContent.getComponent(5).setVisible(false);
+				pContent.getComponent(6).setVisible(false);
+			}
+		});
 		libMenu.add(checkoutBookItem);
 		
 		checkoutRecordItem = new JMenuItem("Checkout Record");
