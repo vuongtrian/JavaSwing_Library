@@ -58,8 +58,11 @@ public class SystemController implements ControllerInterface {
 	}
 	@Override
 	public boolean updateMemberController(LibraryMember member) {
+		System.out.println("entered controller");
 		DataAccess da = new DataAccessFacade();
-		return da.updateMember(member);
+		boolean flag = da.updateMember(member);
+		System.out.println(flag);
+		return flag;
 	}
 	@Override
 	public void addBookController(Book newBook) {

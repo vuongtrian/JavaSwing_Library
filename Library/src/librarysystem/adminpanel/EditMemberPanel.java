@@ -1,14 +1,15 @@
 package librarysystem.adminpanel;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import business.Address;
+import business.ControllerInterface;
+import business.LibraryMember;
+import business.SystemController;
+
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class EditMemberPanel extends JPanel {
 	public static final EditMemberPanel INSTANCE = new EditMemberPanel();
@@ -37,6 +38,8 @@ public class EditMemberPanel extends JPanel {
 	private EditMemberPanel() {
 		setLayout(null);
 		setPreferredSize(new Dimension(500,500));
+		ControllerInterface ci = new SystemController();
+
 		
 		lHeader = new JLabel("Edit Member");
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -47,9 +50,25 @@ public class EditMemberPanel extends JPanel {
 		lMemberId = new JLabel("Memeber Id");
 		lMemberId.setBounds(36, 41, 78, 13);
 		add(lMemberId);
-		
+
 		cbMemberId = new JComboBox();
+		List<String> allMember = ci.allMemberIds();
+		cbMemberId.setModel(new DefaultComboBoxModel(allMember.toArray(new String[0])));
 		cbMemberId.setBounds(104, 41, 107, 21);
+		cbMemberId.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String selectedId = cbMemberId.getSelectedItem().toString();
+				LibraryMember member = ci.getLibraryMemberByIdController(selectedId);
+				tfFirstName.setText(member.getFirstName());
+				tfLastName.setText(member.getLastName());
+				tfPhone.setText(member.getTelephone());
+				tfStreet.setText(member.getAddress().getStreet());
+				tfCity.setText(member.getAddress().getCity());
+				tfState.setText(member.getAddress().getState());
+				tfZipCode.setText(member.getAddress().getZip());
+			}
+		});
 		add(cbMemberId);
 		
 		tfFirstName = new JTextField();
@@ -116,6 +135,22 @@ public class EditMemberPanel extends JPanel {
 			}
 		});
 		bSave.setBounds(183, 249, 85, 21);
+		bSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String id = cbMemberId.getSelectedItem().toString();
+				String firstName = tfFirstName.getText();
+				String lastName = tfLastName.getText();
+				String street = tfStreet.getText();
+				String city = tfCity.getText();
+				String state = tfState.getText();
+				String phone = tfPhone.getText();
+				String zipCode = tfZipCode.getText();
+				LibraryMember member = new LibraryMember(id, firstName, lastName, phone, new Address(street, city, state,zipCode));
+				System.out.println(member.toString());
+				ci.updateMemberController(member);
+			}
+		});
 		add(bSave);
 		
 		tfPhone = new JTextField();

@@ -168,9 +168,10 @@ public class DataAccessFacade implements DataAccess {
 
 	@Override
 	public boolean updateMember(LibraryMember member) {
-		HashMap<String, LibraryMember> members = new HashMap<>();
+		HashMap<String, LibraryMember> members = readMemberMap();
 		LibraryMember oldMember = members.get(member.getMemberId());
 		if (oldMember != null) {
+			System.out.println("entered ");
 			members.replace(member.getMemberId(), oldMember, member);
 			saveToStorage(StorageType.MEMBERS, members);
 			return true;
@@ -180,7 +181,7 @@ public class DataAccessFacade implements DataAccess {
 
 	@Override
 	public void addBook(Book newBook) {
-		HashMap<String, Book> books = new HashMap<String, Book>();
+		HashMap<String, Book> books = readBooksMap();
 		books.put(newBook.getIsbn(), newBook);
 		saveToStorage(StorageType.BOOKS, books);
 	}
