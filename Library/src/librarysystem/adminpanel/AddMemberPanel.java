@@ -2,12 +2,13 @@ package librarysystem.adminpanel;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class AddMemberPanel extends JPanel {
+	public static final AddMemberPanel INSTANCE = new AddMemberPanel();
 	private JTextField tfId;
 	private JTextField tfFirstName;
 	private JTextField tfLastName;
@@ -16,20 +17,31 @@ public class AddMemberPanel extends JPanel {
 	private JTextField tfCity;
 	private JTextField tfState;
 	private JTextField tfZipCode;
-
+	private JLabel lHeader;
+	private JLabel lId;
+	private JLabel lFirstName;
+	private JLabel lLastName;
+	private JLabel lPhone;
+	private JLabel lAddress;
+	private JLabel lStreet;
+	private JLabel lCity;
+	private JLabel lState;
+	private JLabel lZipCode;
+	private JButton btnAdd;
 	/**
 	 * Create the panel.
 	 */
-	public AddMemberPanel() {
+	private AddMemberPanel() {
 		setLayout(null);
+		setPreferredSize(new Dimension(500,500));
 		
-		JLabel lHeader = new JLabel("Add Mew Member");
+		lHeader = new JLabel("Add Mew Member");
 		lHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lHeader.setBounds(10, 5, 430, 20);
 		add(lHeader);
 		
-		JLabel lId = new JLabel("ID");
+		lId = new JLabel("ID");
 		lId.setBounds(10, 35, 73, 13);
 		add(lId);
 		
@@ -38,7 +50,7 @@ public class AddMemberPanel extends JPanel {
 		add(tfId);
 		tfId.setColumns(10);
 		
-		JLabel lFirstName = new JLabel("First Name");
+		lFirstName = new JLabel("First Name");
 		lFirstName.setBounds(10, 61, 73, 13);
 		add(lFirstName);
 		
@@ -47,7 +59,7 @@ public class AddMemberPanel extends JPanel {
 		tfFirstName.setBounds(93, 58, 136, 19);
 		add(tfFirstName);
 		
-		JLabel lLastName = new JLabel("Last Name");
+		lLastName = new JLabel("Last Name");
 		lLastName.setBounds(232, 61, 52, 13);
 		add(lLastName);
 		
@@ -56,7 +68,7 @@ public class AddMemberPanel extends JPanel {
 		tfLastName.setBounds(288, 58, 152, 19);
 		add(tfLastName);
 		
-		JLabel lPhone = new JLabel("Phone");
+		lPhone = new JLabel("Phone");
 		lPhone.setBounds(10, 84, 45, 13);
 		add(lPhone);
 		
@@ -65,12 +77,12 @@ public class AddMemberPanel extends JPanel {
 		add(tfPhone);
 		tfPhone.setColumns(10);
 		
-		JLabel lAddress = new JLabel("Address");
+		lAddress = new JLabel("Address");
 		lAddress.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lAddress.setBounds(10, 113, 45, 20);
 		add(lAddress);
 		
-		JLabel lStreet = new JLabel("Street");
+		lStreet = new JLabel("Street");
 		lStreet.setBounds(10, 143, 45, 13);
 		add(lStreet);
 		
@@ -79,7 +91,7 @@ public class AddMemberPanel extends JPanel {
 		add(tfStreet);
 		tfStreet.setColumns(10);
 		
-		JLabel lCity = new JLabel("City");
+		lCity = new JLabel("City");
 		lCity.setBounds(239, 143, 45, 13);
 		add(lCity);
 		
@@ -88,7 +100,7 @@ public class AddMemberPanel extends JPanel {
 		add(tfCity);
 		tfCity.setColumns(10);
 		
-		JLabel lState = new JLabel("state");
+		lState = new JLabel("state");
 		lState.setBounds(10, 190, 45, 13);
 		add(lState);
 		
@@ -97,7 +109,7 @@ public class AddMemberPanel extends JPanel {
 		add(tfState);
 		tfState.setColumns(10);
 		
-		JLabel lZipCode = new JLabel("Zip code ");
+		lZipCode = new JLabel("Zip code ");
 		lZipCode.setBounds(239, 190, 45, 13);
 		add(lZipCode);
 		
@@ -106,9 +118,17 @@ public class AddMemberPanel extends JPanel {
 		add(tfZipCode);
 		tfZipCode.setColumns(10);
 		
-		JButton btnAdd = new JButton("Add");
+		btnAdd = new JButton("Add");
 		btnAdd.setBounds(185, 241, 85, 21);
 		add(btnAdd);
+	}
 
+	public void init() {
+		try {
+			AddMemberPanel panel = new AddMemberPanel();
+			panel.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

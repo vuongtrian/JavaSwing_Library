@@ -2,30 +2,35 @@ package librarysystem.adminpanel;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class AddBookCopy extends JPanel {
+public class AddBookCopyPanel extends JPanel {
+	public static final AddBookCopyPanel INSTANCE = new AddBookCopyPanel();
 	private JTextField tfIsbn;
 	private JTable table;
-
+	private JLabel lHeader;
+	private JLabel lIsbn;
+	private JButton btnAdd;
+	private JScrollPane tContent;
 	/**
 	 * Create the panel.
 	 */
-	public AddBookCopy() {
+	private AddBookCopyPanel() {
 		setLayout(null);
-		
-		JLabel lHeader = new JLabel("Add Book Copy");
+		setPreferredSize(new Dimension(500,500));
+
+		lHeader = new JLabel("Add Book Copy");
 		lHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lHeader.setBounds(10, 10, 430, 18);
 		add(lHeader);
 		
-		JLabel lIsbn = new JLabel("ISBN");
+		lIsbn = new JLabel("ISBN");
 		lIsbn.setBounds(20, 41, 45, 13);
 		add(lIsbn);
 		
@@ -34,17 +39,24 @@ public class AddBookCopy extends JPanel {
 		add(tfIsbn);
 		tfIsbn.setColumns(10);
 		
-		JButton btnAdd = new JButton("Add a Copy");
+		btnAdd = new JButton("Add a Copy");
 		btnAdd.setBounds(355, 38, 85, 21);
 		add(btnAdd);
 		
-		JScrollPane tContent = new JScrollPane();
+		tContent = new JScrollPane();
 		tContent.setBounds(10, 79, 430, 211);
 		add(tContent);
 		
 		table = new JTable();
 		tContent.setViewportView(table);
-
 	}
 
+	public void init() {
+		try {
+			AddBookCopyPanel panel = new AddBookCopyPanel();
+			panel.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

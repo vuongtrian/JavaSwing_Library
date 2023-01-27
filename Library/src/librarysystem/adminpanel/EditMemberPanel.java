@@ -3,7 +3,7 @@ package librarysystem.adminpanel;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
+import java.awt.*;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class EditMemberPanel extends JPanel {
+	public static final EditMemberPanel INSTANCE = new EditMemberPanel();
 	private JTextField tfFirstName;
 	private JTextField tfStreet;
 	private JTextField tfCity;
@@ -18,24 +19,36 @@ public class EditMemberPanel extends JPanel {
 	private JTextField tfZipCode;
 	private JTextField tfLastName;
 	private JTextField tfPhone;
-
+	private JLabel lHeader;
+	private JLabel lMemberId;
+	private JComboBox cbMemberId;
+	private JLabel lFirstName;
+	private JLabel llastName;
+	private JLabel lAddress;
+	private JLabel lStreet;
+	private JLabel lState;
+	private JLabel lCity;
+	private JLabel lZipCode;
+	private JButton bSave;
+	private JLabel lPhone;
 	/**
 	 * Create the panel.
 	 */
-	public EditMemberPanel() {
+	private EditMemberPanel() {
 		setLayout(null);
+		setPreferredSize(new Dimension(500,500));
 		
-		JLabel lHeader = new JLabel("Edit Member");
+		lHeader = new JLabel("Edit Member");
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lHeader.setBounds(10, 10, 430, 21);
 		add(lHeader);
 		
-		JLabel lMemberId = new JLabel("Memeber Id");
+		lMemberId = new JLabel("Memeber Id");
 		lMemberId.setBounds(36, 41, 78, 13);
 		add(lMemberId);
 		
-		JComboBox cbMemberId = new JComboBox();
+		cbMemberId = new JComboBox();
 		cbMemberId.setBounds(104, 41, 107, 21);
 		add(cbMemberId);
 		
@@ -44,31 +57,31 @@ public class EditMemberPanel extends JPanel {
 		add(tfFirstName);
 		tfFirstName.setColumns(10);
 		
-		JLabel lFirstName = new JLabel("First Name");
+		lFirstName = new JLabel("First Name");
 		lFirstName.setBounds(36, 83, 58, 13);
 		add(lFirstName);
 		
-		JLabel llastName = new JLabel("Last Name");
+		llastName = new JLabel("Last Name");
 		llastName.setBounds(221, 83, 58, 13);
 		add(llastName);
 		
-		JLabel lAddress = new JLabel("Address");
+		lAddress = new JLabel("Address");
 		lAddress.setBounds(36, 138, 45, 13);
 		add(lAddress);
 		
-		JLabel lStreet = new JLabel("Street");
+		lStreet = new JLabel("Street");
 		lStreet.setBounds(36, 167, 45, 13);
 		add(lStreet);
 		
-		JLabel lState = new JLabel("State");
+		lState = new JLabel("State");
 		lState.setBounds(36, 209, 45, 13);
 		add(lState);
 		
-		JLabel lCity = new JLabel("City");
+		lCity = new JLabel("City");
 		lCity.setBounds(223, 167, 45, 13);
 		add(lCity);
 		
-		JLabel lZipCode = new JLabel("Zip Code");
+		lZipCode = new JLabel("Zip Code");
 		lZipCode.setBounds(221, 209, 45, 13);
 		add(lZipCode);
 		
@@ -97,7 +110,7 @@ public class EditMemberPanel extends JPanel {
 		add(tfLastName);
 		tfLastName.setColumns(10);
 		
-		JButton bSave = new JButton("Save");
+		bSave = new JButton("Save");
 		bSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -110,9 +123,17 @@ public class EditMemberPanel extends JPanel {
 		add(tfPhone);
 		tfPhone.setColumns(10);
 		
-		JLabel lPhone = new JLabel("Phone");
+		lPhone = new JLabel("Phone");
 		lPhone.setBounds(36, 115, 45, 13);
 		add(lPhone);
+	}
 
+	public void init() {
+		try {
+			EditMemberPanel panel = new EditMemberPanel();
+			panel.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

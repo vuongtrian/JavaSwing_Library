@@ -7,33 +7,44 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Font;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class AddBookPanel extends JPanel {
+	public static final AddBookPanel INSTANCE = new AddBookPanel();
 	private JTextField tfIsbn;
 	private JTextField tfTitle;
 	private JTextField textField_4;
 	private JTextField tfAuthors;
 	private JTable tContent;
-
+	private JLabel lHeader;
+	private JLabel lIsbn;
+	private JLabel lTitle;
+	private JLabel lAuthors;
+	private JLabel lMaxCheckOut;
+	private JLabel lCopies;
+	private JButton bAuthors;
+	private JComboBox cbMaxCheckOut;
+	private JButton btnAdd;
+	private JScrollPane spContent;
 	/**
 	 * Create the panel.
 	 */
-	public AddBookPanel() {
+	private AddBookPanel() {
 		setLayout(null);
+		setPreferredSize(new Dimension(500,500));
 		
-		JLabel lHeader = new JLabel("Add Book");
+		lHeader = new JLabel("Add Book");
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lHeader.setBounds(10, 10, 430, 19);
 		add(lHeader);
 		
-		JLabel lIsbn = new JLabel("ISBN");
+		lIsbn = new JLabel("ISBN");
 		lIsbn.setBounds(10, 49, 45, 13);
 		add(lIsbn);
 		
@@ -42,7 +53,7 @@ public class AddBookPanel extends JPanel {
 		add(tfIsbn);
 		tfIsbn.setColumns(10);
 		
-		JLabel lTitle = new JLabel("Title");
+		lTitle = new JLabel("Title");
 		lTitle.setBounds(240, 49, 37, 13);
 		add(lTitle);
 		
@@ -51,15 +62,15 @@ public class AddBookPanel extends JPanel {
 		add(tfTitle);
 		tfTitle.setColumns(10);
 		
-		JLabel lAuthors = new JLabel("Authors");
+		lAuthors = new JLabel("Authors");
 		lAuthors.setBounds(10, 82, 45, 13);
 		add(lAuthors);
 		
-		JLabel lMaxCheckOut = new JLabel("Max CheckOut");
+		lMaxCheckOut = new JLabel("Max CheckOut");
 		lMaxCheckOut.setBounds(240, 105, 82, 13);
 		add(lMaxCheckOut);
 		
-		JLabel lCopies = new JLabel("Copies");
+		lCopies = new JLabel("Copies");
 		lCopies.setBounds(10, 105, 45, 13);
 		add(lCopies);
 		
@@ -68,7 +79,7 @@ public class AddBookPanel extends JPanel {
 		add(textField_4);
 		textField_4.setColumns(10);
 		
-		JComboBox cbMaxCheckOut = new JComboBox();
+		cbMaxCheckOut = new JComboBox();
 		cbMaxCheckOut.setModel(new DefaultComboBoxModel(new String[] {"7", "21"}));
 		cbMaxCheckOut.setBounds(332, 101, 108, 21);
 		add(cbMaxCheckOut);
@@ -78,7 +89,7 @@ public class AddBookPanel extends JPanel {
 		add(tfAuthors);
 		tfAuthors.setColumns(10);
 		
-		JButton bAuthors = new JButton("+");
+		bAuthors = new JButton("+");
 		bAuthors.setFont(new Font("Tahoma", Font.PLAIN, 7));
 		bAuthors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -87,11 +98,11 @@ public class AddBookPanel extends JPanel {
 		bAuthors.setBounds(395, 75, 45, 19);
 		add(bAuthors);
 		
-		JButton btnAdd = new JButton("Add");
+		btnAdd = new JButton("Add");
 		btnAdd.setBounds(355, 132, 85, 21);
 		add(btnAdd);
 		
-		JScrollPane spContent = new JScrollPane();
+		spContent = new JScrollPane();
 		spContent.setBounds(10, 163, 430, 127);
 		add(spContent);
 		
@@ -103,6 +114,14 @@ public class AddBookPanel extends JPanel {
 			}
 		));
 		spContent.setColumnHeaderView(tContent);
+	}
 
+	public void init() {
+		try {
+			AddBookPanel panel = new AddBookPanel();
+			panel.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
