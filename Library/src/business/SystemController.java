@@ -42,6 +42,19 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
+
+	@Override
+	public HashMap<String, LibraryMember> allMembers() {
+		DataAccess da = new DataAccessFacade();
+		return da.readMemberMap();
+	}
+
+	@Override
+	public HashMap<String, Book> allBooks() {
+		DataAccess da = new DataAccessFacade();
+		return da.readBooksMap();
+	}
+
 	@Override
 	public void addNewMemberController(LibraryMember member) {
 		DataAccess da = new DataAccessFacade();
