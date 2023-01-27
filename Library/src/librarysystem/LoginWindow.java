@@ -191,18 +191,17 @@ public class LoginWindow extends JFrame implements LibWindow {
 				try {
 					cs.login(username.getText(), password.getText());
 					if (cs.currentAuth == Auth.LIBRARIAN) {
-//						JOptionPane.showMessageDialog(this,"Welcome Librarian");
-//						MainWindow.INSTANCE.disableTab(Auth.LIBRARIAN);
+						JOptionPane.showMessageDialog(this,"Welcome Librarian");
 						MainWindow.INSTANCE.init(Auth.LIBRARIAN);
 						LoginWindow.INSTANCE.setVisible(false);
 						}
 					else if (cs.currentAuth == Auth.ADMIN) {
-//						JOptionPane.showMessageDialog(this,"Welcome Admin");
+						JOptionPane.showMessageDialog(this,"Welcome Admin");
 						MainWindow.INSTANCE.init(Auth.ADMIN);
 						LoginWindow.INSTANCE.setVisible(false);
 					}
 					else {
-//						JOptionPane.showMessageDialog(this, "Welcome Super User");
+						JOptionPane.showMessageDialog(this, "Welcome Super User");
 						MainWindow.INSTANCE.init(Auth.BOTH);
 						LoginWindow.INSTANCE.setVisible(false);
 					}

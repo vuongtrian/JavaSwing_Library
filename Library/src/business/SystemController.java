@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
@@ -40,6 +42,40 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
 	}
+	@Override
+	public void addNewMemberController(LibraryMember member) {
+		DataAccess da = new DataAccessFacade();
+		da.saveNewMember(member);
+	}
+	@Override
+	public LibraryMember getLibraryMemberByIdController(String id) {
+		DataAccess da = new DataAccessFacade();
+		LibraryMember lm = da.getLibraryMemberById(id);
+		return lm;
+	}
+	@Override
+	public boolean updateMemberController(LibraryMember member) {
+		DataAccess da = new DataAccessFacade();
+		return da.updateMember(member);
+	}
+	@Override
+	public void addBookController(Book newBook) {
+		DataAccess da = new DataAccessFacade();
+		da.addBook(newBook);	
+	}
+	@Override
+	public void addBookCopyController(BookCopy newBookCopy) {
+		DataAccess da = new DataAccessFacade();
+		da.addBookCopy(newBookCopy);
+		
+	}
+	@Override
+	public Book getBookByIsbnController(String isbn) {
+		DataAccess da = new DataAccessFacade();
+
+		return da.getBookByIsbn(isbn);
+	}
+	
 	
 	
 }
