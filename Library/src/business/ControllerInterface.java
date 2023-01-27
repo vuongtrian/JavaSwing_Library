@@ -15,5 +15,6 @@ public interface ControllerInterface {
 	public void addBookController(Book newBook);
 	public Book getBookByIsbnController(String isbn);
 	public void addBookCopyController(BookCopy newBookCopy);
+
 	
 }

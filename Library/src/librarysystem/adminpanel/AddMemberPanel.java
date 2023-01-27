@@ -1,8 +1,16 @@
 package librarysystem.adminpanel;
 
+import business.Address;
+import business.ControllerInterface;
+import business.LibraryMember;
+import business.SystemController;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.Member;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -120,6 +128,24 @@ public class AddMemberPanel extends JPanel {
 		
 		btnAdd = new JButton("Add");
 		btnAdd.setBounds(185, 241, 85, 21);
+		btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String id = tfId.getText();
+				String firstName = tfFirstName.getText();
+				String lastName = tfLastName.getText();
+				String street = tfStreet.getText();
+				String city = tfCity.getText();
+				String state = tfState.getText();
+				String phone = tfPhone.getText();
+				String zipCode = tfZipCode.getText();
+
+				Address add = new Address(street, city, state, zipCode);
+				LibraryMember member = new LibraryMember(id, firstName, lastName, phone, add);
+				ControllerInterface ci = new SystemController();
+				ci.addNewMemberController(member);
+			}
+		});
 		add(btnAdd);
 	}
 

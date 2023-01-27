@@ -2,10 +2,11 @@ package librarysystem;
 
 
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import business.ControllerInterface;
+import business.SystemController;
 import dataaccess.Auth;
 import librarysystem.adminpanel.AddBookCopyPanel;
 import librarysystem.adminpanel.AddBookPanel;
@@ -15,15 +16,10 @@ import librarysystem.libpanel.CheckoutBookPanel;
 import librarysystem.libpanel.CheckoutRecordPanel;
 import librarysystem.libpanel.OverdueCheckoutPanel;
 
-import javax.swing.JButton;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class MainWindow extends JFrame{
 	
@@ -65,7 +61,7 @@ public class MainWindow extends JFrame{
 	private JMenuItem addCopyItem;
 	private JPanel pContent;
 	private JButton btnLogout;
-	private JButton btnNewButton;
+	private JButton btnAllMember;
 
 	private MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -214,11 +210,30 @@ public class MainWindow extends JFrame{
 		btnLogout.setBounds(468, 338, 85, 21);
 		contentPane.add(btnLogout);
 		
-		btnNewButton = new JButton("All Members");
-		btnNewButton.setBounds(10, 338, 89, 21);
-		contentPane.add(btnNewButton);
-		btnNewButton.addActionListener(new ActionListener() {
+		btnAllMember = new JButton("All Members");
+		btnAllMember.setBounds(10, 338, 89, 21);
+		contentPane.add(btnAllMember);
+		btnAllMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				JOptionPane.showMessageDialog(adminMenu,"MEMBER ADDED");
+				ControllerInterface ci = new SystemController();
+
+				List<String> ids = ci.allMemberIds();
+				Collections.sort(ids);
+
+
+				AllMemberIdsWindow.INSTANCE.init();
+				AllMemberIdsWindow.INSTANCE.pack();
+				AllMemberIdsWindow.INSTANCE.setVisible(true);
+				StringBuilder sb = new StringBuilder();
+				for(String s: ids) {
+					sb.append(s + "\n");
+				}
+				System.out.println(sb.toString());
+				AllMemberIdsWindow.INSTANCE.setData(sb.toString());
+				AllMemberIdsWindow.INSTANCE.pack();
+				Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
+				AllMemberIdsWindow.INSTANCE.setVisible(true);
 			}
 		});
 

@@ -45,7 +45,10 @@ public class SystemController implements ControllerInterface {
 	@Override
 	public void addNewMemberController(LibraryMember member) {
 		DataAccess da = new DataAccessFacade();
+		System.out.println("before save");
 		da.saveNewMember(member);
+		System.out.println("after save");
+
 	}
 	@Override
 	public LibraryMember getLibraryMemberByIdController(String id) {
