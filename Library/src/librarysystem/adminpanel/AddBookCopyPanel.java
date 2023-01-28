@@ -1,8 +1,14 @@
 package librarysystem.adminpanel;
 
+import business.Book;
+import business.ControllerInterface;
+import business.SystemController;
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -23,6 +29,7 @@ public class AddBookCopyPanel extends JPanel {
 	private AddBookCopyPanel() {
 		setLayout(null);
 		setPreferredSize(new Dimension(500,500));
+		ControllerInterface ci = new SystemController();
 
 		lHeader = new JLabel("Add Book Copy");
 		lHeader.setHorizontalAlignment(SwingConstants.CENTER);
@@ -41,6 +48,13 @@ public class AddBookCopyPanel extends JPanel {
 		
 		btnAdd = new JButton("Add a Copy");
 		btnAdd.setBounds(355, 38, 85, 21);
+		btnAdd.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String isbn = tfIsbn.getText();
+				Book book = ci.getBookByIsbnController(isbn);
+			}
+		});
 		add(btnAdd);
 		
 		tContent = new JScrollPane();

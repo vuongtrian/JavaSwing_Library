@@ -38,4 +38,14 @@ public class Person implements Serializable {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	@Override
+	public String toString() {
+		return "Person{" +
+				"firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", telephone='" + telephone + '\'' +
+				", address=" + address +
+				'}';
+	}
 }
