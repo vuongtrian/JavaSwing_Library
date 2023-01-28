@@ -26,7 +26,7 @@ public class DataAccessFacade implements DataAccess {
 //			+ "/Library/src/dataaccess/storage";
 
 	public static final String OUTPUT_DIR = System.getProperty("user.dir")
-			+ "/src/dataaccess/storage";
+			+ "/Library/src/dataaccess/storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -196,11 +196,10 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@Override
-	public void addBookCopy(BookCopy bookCopy) {
+	public void addBookCopy(String isbn) {
 		HashMap<String, Book> books = readBooksMap();
-		Book book = bookCopy.getBook();
 		try {
-			books.get(book.getIsbn()).addCopy();
+			books.get(isbn).addCopy();
 			saveToStorage(StorageType.BOOKS, books);
 		} catch (Exception e) {
 			System.out.println("something wrong with addBookCopy!");

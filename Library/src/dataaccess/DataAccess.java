@@ -14,7 +14,7 @@ public interface DataAccess {
 	public LibraryMember getLibraryMemberById(String id);
 	public boolean updateMember(LibraryMember member);
 	public void addBook(Book newBook);
-	public void addBookCopy(BookCopy bookCopy);
+	public void addBookCopy(String isbn);
 	public Book getBookByIsbn(String isbn);
 	
 }

@@ -64,15 +64,16 @@ public class SystemController implements ControllerInterface {
 		System.out.println(flag);
 		return flag;
 	}
+
 	@Override
 	public void addBookController(Book newBook) {
 		DataAccess da = new DataAccessFacade();
 		da.addBook(newBook);	
 	}
 	@Override
-	public void addBookCopyController(BookCopy newBookCopy) {
+	public void addBookCopyController(String isbn) {
 		DataAccess da = new DataAccessFacade();
-		da.addBookCopy(newBookCopy);
+		da.addBookCopy(isbn);
 		
 	}
 	@Override

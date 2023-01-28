@@ -14,7 +14,7 @@ public interface ControllerInterface {
 	public boolean updateMemberController(LibraryMember member);
 	public void addBookController(Book newBook);
 	public Book getBookByIsbnController(String isbn);
-	public void addBookCopyController(BookCopy newBookCopy);
+	public void addBookCopyController(String isbn);
 
 	
 }

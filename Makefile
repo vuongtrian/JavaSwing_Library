@@ -9,7 +9,7 @@ MAIN_VIEW_CLASS = librarysystem.Main
 all: clean compile
 
 compile:
-	$(JAVAC) $(JAVAC_FLAGS) -sourcepath src Library/src/business/*.java Library/src/dataaccess/*.java Library/src/librarysystem/*.java
+	$(JAVAC) $(JAVAC_FLAGS) -sourcepath src Library/src/business/*.java Library/src/dataaccess/*.java Library/src/librarysystem/*.java Library/src/librarysystem/libpanel/*.java Library/src/librarysystem/adminpanel/*.java 
 
 runb:
 	$(JAVA) $(JAVA_FLAGS) $(MAIN_BUSINESS_CLASS)
