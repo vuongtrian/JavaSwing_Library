@@ -1,13 +1,21 @@
 package librarysystem.libpanel;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.*;
-import javax.swing.JComboBox;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+
+import business.SystemController;
 
 public class CheckoutBookPanel extends JPanel {
 	public static final CheckoutBookPanel INSTANCE = new CheckoutBookPanel();
@@ -25,6 +33,7 @@ public class CheckoutBookPanel extends JPanel {
 	private CheckoutBookPanel() {
 		setLayout(null);
 		setPreferredSize(new Dimension(500,500));
+		SystemController ci = new SystemController();
 		
 		lHeader = new JLabel("Checkout Book");
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -38,6 +47,8 @@ public class CheckoutBookPanel extends JPanel {
 		
 		tfId = new JComboBox();
 		tfId.setBounds(97, 38, 85, 21);
+		List<String> members = ci.allMemberIds();
+		tfId.setModel(new DefaultComboBoxModel<>(members.toArray(new String[0])));
 		add(tfId);
 		
 		lIsbn = new JLabel("ISBN");
@@ -47,10 +58,20 @@ public class CheckoutBookPanel extends JPanel {
 		
 		bCheckout = new JButton("Checkout");
 		bCheckout.setBounds(355, 38, 85, 21);
+		bCheckout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		add(bCheckout);
 		
 		cbIsbn = new JComboBox();
 		cbIsbn.setBounds(247, 38, 85, 21);
+		List<String> books = ci.allBookIds();
+		cbIsbn.setModel(new DefaultComboBoxModel<>(books.toArray(new String[0])));
 		add(cbIsbn);
 		
 		spContent = new JScrollPane();
