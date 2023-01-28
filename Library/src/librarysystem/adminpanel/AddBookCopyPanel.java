@@ -4,16 +4,13 @@ import business.Book;
 import business.ControllerInterface;
 import business.SystemController;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import java.util.*;
+import java.util.List;
 
 public class AddBookCopyPanel extends JPanel {
 	public static final AddBookCopyPanel INSTANCE = new AddBookCopyPanel();
@@ -23,6 +20,8 @@ public class AddBookCopyPanel extends JPanel {
 	private JLabel lIsbn;
 	private JButton btnAdd;
 	private JScrollPane tContent;
+	ControllerInterface ci = new SystemController();
+	private HashMap<String, Book> bookList = ci.allBooks();
 	/**
 	 * Create the panel.
 	 */
@@ -52,7 +51,9 @@ public class AddBookCopyPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String isbn = tfIsbn.getText();
-				Book book = ci.getBookByIsbnController(isbn);
+				if (!ci.allBooks().containsKey(isbn))
+					JOptionPane.showMessageDialog( AddBookCopyPanel.this,"Not found ISBN - " + isbn);
+				ci.addBookCopyController(isbn);
 			}
 		});
 		add(btnAdd);
@@ -60,8 +61,8 @@ public class AddBookCopyPanel extends JPanel {
 		tContent = new JScrollPane();
 		tContent.setBounds(10, 79, 430, 211);
 		add(tContent);
-		
-		table = new JTable();
+
+		defineTable();
 		tContent.setViewportView(table);
 	}
 
@@ -72,5 +73,22 @@ public class AddBookCopyPanel extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void defineTable() {
+		String[] column = {"ISBN", "Title", "Max Checkout", "Number of Copies"};
+		List<Book> books = new ArrayList<>();
+		DefaultTableModel tableModel = new DefaultTableModel(column, 0);
+		table = new JTable(tableModel);
+		Iterator iterator = bookList.entrySet().iterator();
+		while (iterator.hasNext()) {
+			Map.Entry mapElement = (Map.Entry)iterator.next();
+			Book book = (Book) mapElement.getValue();
+
+			Object[] row = {book.getIsbn(), book.getTitle(), book.getMaxCheckoutLength(), book.getCopyNums()};
+			tableModel.addRow(row);
+		}
+		table.setSize(new Dimension(500,300));
+		table.setBackground(new Color(224,224,224));
 	}
 }
