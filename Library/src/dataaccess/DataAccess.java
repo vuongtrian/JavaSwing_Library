@@ -16,5 +16,9 @@ public interface DataAccess {
 	public void addBook(Book newBook);
 	public void addBookCopy(String isbn);
 	public Book getBookByIsbn(String isbn);
+	public String createCheckoutRecord(String isbn, String memberId);
+	public BookCopy getBookCopy(String isbn);
+	public String getBookCopiesWithCheckoutRecord( String isbn );
+	HashMap<String, String> getBookCopyCheckoutRecord(BookCopy bookCopy);
 	
 }

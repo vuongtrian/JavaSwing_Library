@@ -1,4 +1,5 @@
 package dataaccess;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -6,20 +7,27 @@ import java.io.Serializable;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.attribute.UserDefinedFileAttributeView;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import business.Book;
 import business.BookCopy;
+import business.CheckoutRecord;
+import business.CheckoutRecordEntry;
 import business.LibraryMember;
 import dataaccess.DataAccessFacade.StorageType;
+import service.Service;
 
 
 public class DataAccessFacade implements DataAccess {
 	
 	enum StorageType {
-		BOOKS, MEMBERS, USERS;
+		BOOKS, MEMBERS, USERS, CHECKOUT_RECORD;
 	}
 	
 //	public static final String OUTPUT_DIR = System.getProperty("user.dir")
@@ -205,4 +213,141 @@ public class DataAccessFacade implements DataAccess {
 			System.out.println("something wrong with addBookCopy!");
 		}
 	}
+	
+	public String createCheckoutRecord(String isbn, String memberId) {       
+		BookCopy bookCopy = getBookCopy(isbn);
+		bookCopy.changeAvailability();
+        CheckoutRecordEntry checkoutRecordEntry = new CheckoutRecordEntry(bookCopy);
+        LibraryMember member = getLibraryMember( memberId );
+        CheckoutRecord checkoutRecord = new CheckoutRecord( memberId );
+        checkoutRecord.getCheckoutRecordEntries().add(checkoutRecordEntry);
+        addNewCheckoutRecord( checkoutRecord );
+        updateBookCopyAvailability( bookCopy.getCopyNum() );
+        member.getRecords().addAll( Collections.singletonList( checkoutRecord ) );
+        updateMember( member );
+        //System.out.println(checkoutRecord);
+        
+        return Service.findProperties(Arrays.asList("checkoutId", "memberId", "bookCopyId", "checkoutDate", "dueDate" ),
+                checkoutRecord.toString() );
+	}
+	
+	@SuppressWarnings("unchecked")
+	public BookCopy getBookCopy( String isbn ) {
+		HashMap<String, Book> books = ( HashMap<String, Book> )readFromStorage( StorageType.BOOKS );
+        for ( Book b : books.values() ) {
+            if ( b.getIsbn() != null && b.getIsbn().equals( isbn.trim() ) ) {
+                for ( BookCopy bc : b.getCopies() ) {
+                    if ( bc.isAvailable() ) {
+                        return bc;
+                    }
+                }
+            }
+        }
+        return null;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public LibraryMember getLibraryMember( String LibraryMemberId ) {
+		HashMap<String, LibraryMember> members = ( HashMap<String, LibraryMember> )readFromStorage(StorageType.MEMBERS );
+        if ( members.containsKey( LibraryMemberId ) ) {
+            return members.get( LibraryMemberId );
+        }else {
+        	System.out.println(LibraryMemberId + "doesn't exit");
+        	return null;
+        }
+	}
+	
+
+	public void addNewCheckoutRecord(CheckoutRecord record){
+		try {
+			if (!Files.exists( Paths.get(DataAccessFacade.OUTPUT_DIR+ File.separator+StorageType.CHECKOUT_RECORD.toString()))) {
+	            Files.createFile(Paths.get(DataAccessFacade.OUTPUT_DIR+ File.separator+StorageType.CHECKOUT_RECORD.toString()));
+	        }
+		}catch(IOException ioe) {
+			System.err.println(ioe);
+		}
+		
+		HashMap<String, CheckoutRecord> checkoutRecord = Optional.ofNullable(readCheckoutRecordMap()).orElseGet(()-> new HashMap<String, CheckoutRecord>());
+		checkoutRecord.put(record.getCheckoutId(), record);
+		saveToStorage(StorageType.CHECKOUT_RECORD, checkoutRecord);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public HashMap<String, CheckoutRecord> readCheckoutRecordMap() {
+		return (HashMap<String, CheckoutRecord>)readFromStorage(StorageType.CHECKOUT_RECORD);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean updateBookCopyAvailability( int bookCopyId ) {	
+		HashMap<String, Book> books = ( HashMap<String, Book> )readFromStorage( StorageType.BOOKS );
+        for ( Book b : books.values() ) {
+            for ( BookCopy bc : b.getCopies()) {
+                if (bc.getCopyNum() == bookCopyId) {
+                    //bc.changeAvailability();
+                    bc.setAvailable(false);
+                    books.replace(b.getIsbn(), b);
+                    saveToStorage( StorageType.BOOKS, books );
+                    return true;
+                }
+            }
+        }
+        return false;
+	}
+
+	
+	public String getBookCopiesWithCheckoutRecord( String isbn ) {
+		StringBuilder responseBuilder = new StringBuilder();
+        if ( Service.isIsbnExist( isbn ) ) {
+            //does not exist
+            return null;
+        }
+        else {
+            Book foundBook = getBookByIsbn( isbn );
+            responseBuilder
+                    .append( "book Isbn = " + foundBook.getIsbn() + "\n" )
+                    .append( "book Title = " + foundBook.getTitle() + "\n" )
+                    .append( "Total Copies = " + foundBook.getCopies().length + "\n" );
+
+            List<BookCopy> bookCopies = Arrays.asList(foundBook.getCopies());
+            bookCopies.forEach( bookCopy -> {
+                HashMap<String, String> bookCopyCheckoutRecord = getBookCopyCheckoutRecord(bookCopy );
+                if ( bookCopyCheckoutRecord.isEmpty() ) {
+                    responseBuilder
+                            .append( "CopyId =" + bookCopy.getCopyNum() + "\n" )
+                            .append( "CheckoutBy = Available \n" )
+                            .append( "Due Date   =  Available\n" );
+                }
+                else {
+                    bookCopyCheckoutRecord.forEach( ( memberName, dueDate ) -> {
+                        responseBuilder
+                                .append( "CopyId =" + bookCopy.getCopyNum() + "\n" )
+                                .append( "CheckoutBy =" + memberName + "\n" )
+                                .append( "Due Date =" + dueDate + "\n" );
+                    } );
+                }
+            } );
+            return responseBuilder.toString();
+        }
+	}
+	
+	
+	@Override
+    public HashMap<String, String> getBookCopyCheckoutRecord( BookCopy bookCopy ) {
+        HashMap<String, String> foundBookCopyCheckoutRecord = new HashMap<>();
+        HashMap<String, CheckoutRecord> checkoutRecordMap = readCheckoutRecordMap();
+        //System.out.println(checkoutRecordMap);
+        checkoutRecordMap.forEach( ( key, record ) -> record.getCheckoutRecordEntries().forEach( entry -> {
+            if ( entry.getBookCopy().getCopyNum() == bookCopy.getCopyNum()) {
+                LibraryMember member = getLibraryMember( record.getMemberId() );
+                foundBookCopyCheckoutRecord.put(member.getFirstName()
+                		.concat(" ")
+                		.concat(member.getLastName()), entry.getDueDate().toString());
+            }
+        }));
+       // System.out.println(checkoutRecordMap);
+
+        return foundBookCopyCheckoutRecord;
+    }
+	
 }

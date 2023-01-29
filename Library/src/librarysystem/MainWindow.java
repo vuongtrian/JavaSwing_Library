@@ -208,6 +208,17 @@ public class MainWindow extends JFrame{
 		
 		btnLogout = new JButton("Logout");
 		btnLogout.setBounds(468, 338, 85, 21);
+		btnLogout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				LoginWindow.INSTANCE.setVisible(true);;
+//				setDefaultCloseOperation(EXIT_ON_CLOSE);
+				setVisible(false);
+			
+			}
+		});
 		contentPane.add(btnLogout);
 		
 		btnAllMember = new JButton("All Members");

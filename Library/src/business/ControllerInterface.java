@@ -18,6 +18,9 @@ public interface ControllerInterface {
 	public void addBookController(Book newBook);
 	public Book getBookByIsbnController(String isbn);
 	public void addBookCopyController(String isbn);
+	public String makeCheckout(String member, String isbn);
+	public List<CheckoutRecord> findMemberCheckoutRecord(String memberId);
+	public String overDueCheckout(String string);
 
 	
 }

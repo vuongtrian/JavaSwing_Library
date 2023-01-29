@@ -10,12 +10,12 @@ import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
+import service.Service;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
-	
+	private static DataAccess da = new DataAccessFacade();
 	public void login(String id, String password) throws LoginException {
-		DataAccess da = new DataAccessFacade();
 		HashMap<String, User> map = da.readUserMap();
 		if(!map.containsKey(id)) {
 			throw new LoginException("ID " + id + " not found");
@@ -29,7 +29,7 @@ public class SystemController implements ControllerInterface {
 	}
 	@Override
 	public List<String> allMemberIds() {
-		DataAccess da = new DataAccessFacade();
+		
 		List<String> retval = new ArrayList<>();
 		retval.addAll(da.readMemberMap().keySet());
 		return retval;
@@ -37,7 +37,6 @@ public class SystemController implements ControllerInterface {
 	
 	@Override
 	public List<String> allBookIds() {
-		DataAccess da = new DataAccessFacade();
 		List<String> retval = new ArrayList<>();
 		retval.addAll(da.readBooksMap().keySet());
 		return retval;
@@ -45,19 +44,16 @@ public class SystemController implements ControllerInterface {
 
 	@Override
 	public HashMap<String, LibraryMember> allMembers() {
-		DataAccess da = new DataAccessFacade();
 		return da.readMemberMap();
 	}
 
 	@Override
 	public HashMap<String, Book> allBooks() {
-		DataAccess da = new DataAccessFacade();
 		return da.readBooksMap();
 	}
 
 	@Override
 	public void addNewMemberController(LibraryMember member) {
-		DataAccess da = new DataAccessFacade();
 		System.out.println("before save");
 		da.saveNewMember(member);
 		System.out.println("after save");
@@ -65,14 +61,12 @@ public class SystemController implements ControllerInterface {
 	}
 	@Override
 	public LibraryMember getLibraryMemberByIdController(String id) {
-		DataAccess da = new DataAccessFacade();
 		LibraryMember lm = da.getLibraryMemberById(id);
 		return lm;
 	}
 	@Override
 	public boolean updateMemberController(LibraryMember member) {
 		System.out.println("entered controller");
-		DataAccess da = new DataAccessFacade();
 		boolean flag = da.updateMember(member);
 		System.out.println(flag);
 		return flag;
@@ -80,22 +74,43 @@ public class SystemController implements ControllerInterface {
 
 	@Override
 	public void addBookController(Book newBook) {
-		DataAccess da = new DataAccessFacade();
 		da.addBook(newBook);	
 	}
 	@Override
 	public void addBookCopyController(String isbn) {
-		DataAccess da = new DataAccessFacade();
 		da.addBookCopy(isbn);
 		
 	}
 	@Override
 	public Book getBookByIsbnController(String isbn) {
-		DataAccess da = new DataAccessFacade();
-
 		return da.getBookByIsbn(isbn);
 	}
 	
+	@Override
+	public String makeCheckout(String memberId, String isbn) {
+		String msg = null;
+		if(Service.isMember( memberId ) ) {
+            msg = memberId + " is  not yet a member \n";
+        }
+        else if(Service.isIsbnExist( isbn ) ) {
+        	msg = "There is no book match this ISBN:"+ isbn +" ! \n";
+        }
+        else if(Service.isBookAvailable( isbn ) ) {
+        	msg = "No available copy at the moment for  Isbn " + isbn + "\n";
+        }
+        else {
+           // System.out.println(da.createCheckoutRecord( isbn, memberId ));
+            msg = "Checkout made successfully ! \n";
+            msg+=da.createCheckoutRecord( isbn, memberId );
+        }
+		return msg;
+	}
+	public List<CheckoutRecord> findMemberCheckoutRecord(String memberId){
+		return da.getLibraryMemberById(memberId).getRecords();
+	}
+	public String overDueCheckout(String isbn) {
+		return da.getBookCopiesWithCheckoutRecord(isbn);
+	}
 	
 	
 }

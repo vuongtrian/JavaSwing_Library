@@ -3,8 +3,20 @@ package librarysystem.libpanel;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+
+import business.CheckoutRecord;
+import business.SystemController;
+import service.Service;
+
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +33,7 @@ public class CheckoutRecordPanel extends JPanel {
 	 * Create the panel.
 	 */
 	private CheckoutRecordPanel() {
+		SystemController ci = new SystemController();
 		setLayout(null);
 		setPreferredSize(new Dimension(500,500));
 		
@@ -36,11 +49,47 @@ public class CheckoutRecordPanel extends JPanel {
 		
 		cbId = new JComboBox();
 		cbId.setBounds(164, 42, 93, 21);
+		List<String> members = ci.allMemberIds();
+		cbId.setModel(new DefaultComboBoxModel<>(members.toArray(new String[0])));
 		add(cbId);
 		
 		btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(267, 42, 65, 21);
+		btnSubmit.setBounds(267, 42, 89, 21);
 		add(btnSubmit);
+		
+		btnSubmit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String[] columnNames = {"Response"};
+				List<CheckoutRecord> records= ci.findMemberCheckoutRecord(cbId.getSelectedItem().toString());
+			    String[] data = { };
+			    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+			    
+			    
+			    for (CheckoutRecord line : records) {
+			    	String properties = Service.findProperties(Arrays.asList("checkoutId", "memberId", "bookCopyId", "checkoutDate", "dueDate" ),
+			                line.toString() );
+			    	
+			    	  for (String row : properties.split("\n")) {
+			    		  Object[] rows = {row};
+				            model.addRow(rows);
+			    	  }
+			    	  model.addRow(new   Object[] {});
+		          
+		        }
+			    
+			  //  model.addRow(data);  
+			    tContent.setModel(model);
+			  
+
+
+			 
+			//	model.setValueAt(), 0, 0);
+	               // model.setValueAt(35, 0, 1);
+	                // update the table to reflect the changes in the model
+	                tContent.repaint();
+			}
+		});
 		
 		spContent = new JScrollPane();
 		spContent.setBounds(10, 69, 430, 221);

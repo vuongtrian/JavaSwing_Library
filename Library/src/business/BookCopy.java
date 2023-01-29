@@ -46,5 +46,16 @@ final public class BookCopy implements Serializable {
 		BookCopy copy = (BookCopy)ob;
 		return copy.book.getIsbn().equals(book.getIsbn()) && copy.copyNum == copyNum;
 	}
+
+	public void setAvailable(boolean b) {
+		this.isAvailable = b;
+		
+	}
+
+	@Override
+	public String toString() {
+		return "BookCopy [copyNum=" + copyNum + ", isAvailable=" + isAvailable + "]";
+	}
+	
 	
 }

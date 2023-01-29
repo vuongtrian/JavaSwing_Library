@@ -139,6 +139,8 @@ public class AddMemberPanel extends JPanel {
 				String state = tfState.getText();
 				String phone = tfPhone.getText();
 				String zipCode = tfZipCode.getText();
+				
+				
 
 				Address add = new Address(street, city, state, zipCode);
 				LibraryMember member = new LibraryMember(id, firstName, lastName, phone, add);
