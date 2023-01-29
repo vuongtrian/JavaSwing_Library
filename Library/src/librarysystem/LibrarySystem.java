@@ -82,13 +82,13 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   menuBar.add(options);
  	   login = new JMenuItem("Login");
  	   login.addActionListener(new LoginListener());
- 	   allBookIds = new JMenuItem("All Book Ids");
- 	   allBookIds.addActionListener(new AllBookIdsListener());
+// 	   allBookIds = new JMenuItem("All Book Ids");
+// 	   allBookIds.addActionListener(new AllBookIdsListener());
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
  	   options.add(login);
- 	   options.add(allBookIds);
- 	   options.add(allMemberIds);
+// 	   options.add(allBookIds);
+// 	   options.add(allMemberIds);
     }
     
     class LoginListener implements ActionListener {

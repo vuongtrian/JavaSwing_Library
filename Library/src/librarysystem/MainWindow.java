@@ -61,11 +61,12 @@ public class MainWindow extends JFrame{
 	private JMenuItem addCopyItem;
 	private JPanel pContent;
 	private JButton btnLogout;
-	private JButton btnAllMember;
+	private JButton btnAllMember, btnAllBook;
 
 	private MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 577, 428);
+		ControllerInterface ci = new SystemController();
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -226,13 +227,8 @@ public class MainWindow extends JFrame{
 		contentPane.add(btnAllMember);
 		btnAllMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				JOptionPane.showMessageDialog(adminMenu,"MEMBER ADDED");
-				ControllerInterface ci = new SystemController();
-
 				List<String> ids = ci.allMemberIds();
 				Collections.sort(ids);
-
-
 				AllMemberIdsWindow.INSTANCE.init();
 				AllMemberIdsWindow.INSTANCE.pack();
 				AllMemberIdsWindow.INSTANCE.setVisible(true);
@@ -240,7 +236,6 @@ public class MainWindow extends JFrame{
 				for(String s: ids) {
 					sb.append(s + "\n");
 				}
-				System.out.println(sb.toString());
 				AllMemberIdsWindow.INSTANCE.setData(sb.toString());
 				AllMemberIdsWindow.INSTANCE.pack();
 				Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
@@ -248,7 +243,25 @@ public class MainWindow extends JFrame{
 			}
 		});
 
-
+		btnAllBook = new JButton("All Books");
+		btnAllBook.setBounds(109, 338, 89, 21);
+		contentPane.add(btnAllBook);
+		btnAllBook.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AllBookIdsWindow.INSTANCE.init();
+				List<String> ids = ci.allBookIds();
+				Collections.sort(ids);
+				StringBuilder sb = new StringBuilder();
+				for(String s: ids) {
+					sb.append(s + "\n");
+				}
+				AllBookIdsWindow.INSTANCE.setData(sb.toString());
+				AllBookIdsWindow.INSTANCE.pack();
+				Util.centerFrameOnDesktop(AllBookIdsWindow.INSTANCE);
+				AllBookIdsWindow.INSTANCE.setVisible(true);
+			}
+		});
 	}
 
 	public void init(Auth auth) {
