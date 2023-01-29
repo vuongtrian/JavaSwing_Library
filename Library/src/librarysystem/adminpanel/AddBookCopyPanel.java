@@ -30,7 +30,7 @@ public class AddBookCopyPanel extends JPanel {
 		setPreferredSize(new Dimension(500,500));
 		ControllerInterface ci = new SystemController();
 
-		lHeader = new JLabel("Add Book Copy");
+		lHeader = new JLabel("ADD NEW COPY");
 		lHeader.setHorizontalAlignment(SwingConstants.CENTER);
 		lHeader.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lHeader.setBounds(10, 10, 430, 18);
@@ -45,8 +45,8 @@ public class AddBookCopyPanel extends JPanel {
 		add(tfIsbn);
 		tfIsbn.setColumns(10);
 		
-		btnAdd = new JButton("Add a Copy");
-		btnAdd.setBounds(355, 38, 85, 21);
+		btnAdd = new JButton("Add Copy");
+		btnAdd.setBounds(355, 37, 95, 21);
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -57,7 +57,7 @@ public class AddBookCopyPanel extends JPanel {
 					JOptionPane.showMessageDialog( AddBookCopyPanel.this,"Not found ISBN - " + isbn);
 				} else {
 					ci.addBookCopyController(isbn);
-					JOptionPane.showMessageDialog(AddBookCopyPanel.this, "Added new copy");
+					JOptionPane.showMessageDialog(AddBookCopyPanel.this, "New copy added successfully!");
 				}
 
 			}
@@ -94,7 +94,7 @@ public class AddBookCopyPanel extends JPanel {
 			Object[] row = {book.getIsbn(), book.getTitle(), book.getMaxCheckoutLength(), book.getCopyNums()};
 			tableModel.addRow(row);
 		}
-		table.setSize(new Dimension(500,300));
+		table.setSize(new Dimension(700,300));
 		table.setBackground(new Color(224,224,224));
 	}
 }
