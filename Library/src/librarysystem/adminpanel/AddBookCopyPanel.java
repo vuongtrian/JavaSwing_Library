@@ -51,9 +51,15 @@ public class AddBookCopyPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String isbn = tfIsbn.getText();
-				if (!ci.allBooks().containsKey(isbn))
+				if(tfIsbn.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(AddBookCopyPanel.this, "Please fill ISBN number");
+				} else if (!ci.allBooks().containsKey(isbn)) {
 					JOptionPane.showMessageDialog( AddBookCopyPanel.this,"Not found ISBN - " + isbn);
-				ci.addBookCopyController(isbn);
+				} else {
+					ci.addBookCopyController(isbn);
+					JOptionPane.showMessageDialog(AddBookCopyPanel.this, "Added new copy");
+				}
+
 			}
 		});
 		add(btnAdd);

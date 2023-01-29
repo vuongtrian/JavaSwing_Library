@@ -2,20 +2,17 @@ package librarysystem.adminpanel;
 
 import business.Address;
 import business.Author;
+import jdk.nashorn.internal.scripts.JO;
 
 import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import java.util.regex.Pattern;
 
 public class AuthorFrame extends JFrame {
 
@@ -129,7 +126,6 @@ public class AuthorFrame extends JFrame {
 				Author author = getAuthor();
 				authorList.add(author);
 				AddBookPanel.INSTANCE.publishAuthor(authorList);
-				System.out.println("Inside author: " + authorList.toString());
 			}
 		});
 		contentPane.add(btnAdd);
@@ -155,6 +151,13 @@ public class AuthorFrame extends JFrame {
 		String state = tfState.getText();
 		String zipCode = tfZipCode.getText();
 
+		if(firstName.isEmpty() || lastName.isEmpty() || phone.isEmpty() || bio.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || zipCode.isEmpty()) {
+			JOptionPane.showMessageDialog(AuthorFrame.this, "Please fill all information");
+		} else if(Pattern.matches("[a-zA-Z]+", phone) || phone.length() != 10) {
+			JOptionPane.showMessageDialog(AuthorFrame.this, "Phone should be number and have 10 digits");
+		} else if (Pattern.matches("[a-zA-Z]+", zipCode) || zipCode.length() != 5) {
+			JOptionPane.showMessageDialog(AuthorFrame.this, "Zipcode should be number and have 5 digits");
+		}
 		Author author = new Author(firstName, lastName, phone, new Address(street, city, state, zipCode),bio);
 		return author;
 	}

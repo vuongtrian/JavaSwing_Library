@@ -5,20 +5,12 @@ import business.Book;
 import business.ControllerInterface;
 import business.SystemController;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.*;
 import java.util.List;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class AddBookPanel extends JPanel {
@@ -135,11 +127,16 @@ public class AddBookPanel extends JPanel {
 					copy = Integer.parseInt(tfCopy.getText());
 				}
 				int maxCheckout = Integer.parseInt(cbMaxCheckOut.getSelectedItem().toString()) ;
-				Book book = new Book(isbn, title, maxCheckout, authors, copy);
-				ci.addBookController(book);
-				List<String> books = ci.allBookIds();
-				System.out.println(books);
-				defineTable();
+
+				if(isbn.isEmpty() || title.isEmpty() || authors.isEmpty()) {
+					JOptionPane.showMessageDialog(AddBookPanel.this, "Please fill all information");
+				} else if(ci.allBookIds().contains(isbn)) {
+					JOptionPane.showMessageDialog(AddBookPanel.this, "ISBN already existed");
+				} else {
+					Book book = new Book(isbn, title, maxCheckout, authors, copy);
+					ci.addBookController(book);
+					defineTable();
+				}
 			}
 		});
 		add(btnAdd);

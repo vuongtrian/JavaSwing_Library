@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class EditMemberPanel extends JPanel {
 	public static final EditMemberPanel INSTANCE = new EditMemberPanel();
@@ -146,9 +147,17 @@ public class EditMemberPanel extends JPanel {
 				String state = tfState.getText();
 				String phone = tfPhone.getText();
 				String zipCode = tfZipCode.getText();
-				LibraryMember member = new LibraryMember(id, firstName, lastName, phone, new Address(street, city, state,zipCode));
-				System.out.println(member.toString());
-				ci.updateMemberController(member);
+
+				if(firstName.isEmpty() || lastName.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || phone.isEmpty() || zipCode.isEmpty()) {
+					JOptionPane.showMessageDialog(EditMemberPanel.this, "Please fill all information");
+				} else if (Pattern.matches("[a-zA-Z]+",phone) || phone.length() != 10) {
+					JOptionPane.showMessageDialog(EditMemberPanel.this, "Phone should be number and have 10 digits");
+				} else if(Pattern.matches("[a-zA-Z]+",zipCode) || zipCode.length() != 5) {
+					JOptionPane.showMessageDialog(EditMemberPanel.this, "Zipcode should be number and have 5 digits");
+				} else {
+					LibraryMember member = new LibraryMember(id, firstName, lastName, phone, new Address(street, city, state,zipCode));
+					ci.updateMemberController(member);
+				}
 			}
 		});
 		add(bSave);

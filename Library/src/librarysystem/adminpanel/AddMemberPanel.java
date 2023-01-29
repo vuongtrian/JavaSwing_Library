@@ -5,15 +5,13 @@ import business.ControllerInterface;
 import business.LibraryMember;
 import business.SystemController;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Member;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class AddMemberPanel extends JPanel {
 	public static final AddMemberPanel INSTANCE = new AddMemberPanel();
@@ -139,13 +137,26 @@ public class AddMemberPanel extends JPanel {
 				String state = tfState.getText();
 				String phone = tfPhone.getText();
 				String zipCode = tfZipCode.getText();
-				
-				
 
-				Address add = new Address(street, city, state, zipCode);
-				LibraryMember member = new LibraryMember(id, firstName, lastName, phone, add);
 				ControllerInterface ci = new SystemController();
-				ci.addNewMemberController(member);
+				List<String> listId = ci.allMemberIds();
+				
+				if(id.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || street.isEmpty() || city.isEmpty() || state.isEmpty() || phone.isEmpty() || zipCode.isEmpty()) {
+					JOptionPane.showMessageDialog(AddMemberPanel.this, "Please fill all information");
+				} else if (Pattern.matches("[a-zA-Z]+",phone) || phone.length() != 10) {
+					JOptionPane.showMessageDialog(AddMemberPanel.this, "Phone should be number and have 10 digits");
+				} else if (listId.contains(tfId.getText())) {
+					JOptionPane.showMessageDialog(AddMemberPanel.this, "Id already existed");
+				} else if(Pattern.matches("[a-zA-Z]+", zipCode) || zipCode.length() != 5) {
+					JOptionPane.showMessageDialog(AddMemberPanel.this, "Zipcode should be number and have 5 digits");
+				} else {
+					Address add = new Address(street, city, state, zipCode);
+					LibraryMember member = new LibraryMember(id, firstName, lastName, phone, add);
+					ci.addNewMemberController(member);
+					JOptionPane.showMessageDialog(AddMemberPanel.this, "Saved");
+				}
+
+
 			}
 		});
 		add(btnAdd);
